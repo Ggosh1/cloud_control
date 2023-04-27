@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet" />
+		<link href="./static/css/main.css" rel="stylesheet" />
+		<link href="./static/css/planshet.css" rel="stylesheet">
+		<link href="./static/css/mobile.css" rel="stylesheet">
+		<title>Сокращатель</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	</head>
+	<body>
+	<script>
+        function get_len() {
+            $.ajax({
+                type: "POST",
+                url: "/get_len",
+                data: $('form').serialize(),
+                success: function(response) {
+                    var json = jQuery.parseJSON(response)
+                    console.log(json.res)
+                    $('#res_txt').html(json.res)
+                    console.log(response);
+                    if (json.res == "Результат: Некорректная ссылка"){
+                    document.getElementById("copy").style.visibility = "hidden";
+						if ($(window).width() < 1100){
+						$('#res_txt').css({
+						"padding-left":"8px",
+						"width":"100%",
+						"padding-right": "0%",
+						"top":"30%"
+						});
+						}
+					}
+                    else{
+                    document.getElementById("copy").style.visibility = "visible";
+                    if ($(window).width() < 1100){
+						$('#res_txt').css({
+						"padding-left":"15%",
+						"width":"100%",
+						"padding-right": "3px",
+						"top":"25%"
+						});
+						}
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        function copytext(el) {
+    var $tmp = $("<textarea>");
+    $("body").append($tmp);
+    $tmp.val($(el).text().substring(11)).select();
+    document.execCommand("copy");
+    $tmp.remove();
+}
+
+
+    </script>
+
+			<header class="v27_5">
+				<div class="v80_6"></div>
+						<span class="v27_11">▸Сокращатель</span>
+			</header>
+			<div class="form-group">
+				<form action="/get_len" method="post" name="form" id="form_container">
+					<input type="text" name="original" id="name" required placeholder="Введите текст">
+					<input type="button" id="btn" value="Сократить" onclick="get_len();">
+				</form>
+				<div id="result">
+					<span id="res_txt"></span>
+					<input type="button" id="copy" onclick="copytext('#res_txt')">
+				</div>
+			</div>
+				<footer class="v65_17">
+					<div class="txt_block">
+				<span class="v75_11">Сокращатель&nbsp;—<br>
+				сервис&nbsp;для&nbsp;генерации<br>коротких&nbsp;ссылок</span>
+				<div class="v65_20">
+					<span class="v75_9">mailbox@azarst.ru</span>
+					<div class="v75_10">
+						<a class="sc" id="vk" href="https://vk.com/azar.studio" target="_blank">Vk</a>
+						<a class="sc" id="tg" href="https://t.me/AzarSt" target="_blank">Tg</a>
+						<a class="sc" id="bh" href="https://www.behance.net/azarst" target="_blank">Bh</a>
+						<a id="inst" href="https://www.instagram.com/azar_studio.ru/" target="_blank">Inst</a>
+					</div>
+					</div>
+				</div>
+					<div class="v80_7"></div>
+				</footer>
+			</div>
+
+
+	</body>
+</html>
