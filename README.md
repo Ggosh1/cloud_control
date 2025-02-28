@@ -5,6 +5,7 @@ python main.py
 
 Если запуск через докер-образ,т то выполните
 docker build -t short_link:latest .
+
 docker run -d -p 5000:5000 short_link:latest
 
 Веб-приложение запустится по адресу
